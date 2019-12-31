@@ -29,6 +29,30 @@ def create_app(test_config=None):
     response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000, http://localhost:3000/')
     return response
 
+  @app.errorhandler(404)
+  def page_not_found(error):
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "not found"
+    }), 404
+
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": "bad request"
+    }), 400
+
+  @app.errorhandler(422)
+  def unprocessable_request(error):
+    return jsonify({
+        "success": False,
+        "error": 422,
+        "message": "unprocessable entity"
+    }), 422
+  
   # @TODO: Write a route that retrivies all books, paginated. 
   #         You can use the constant above to paginate by eight books.
   #         If you decide to change the number of books per page,
