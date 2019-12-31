@@ -12,8 +12,9 @@ class App extends Component {
     this.state = {
       page: 1,
       totalBooks: 0,
-      books: []
-    }
+      books: [],
+      booksPerPage: 0
+    };
   }
 
   getBooks = () => {
@@ -23,7 +24,8 @@ class App extends Component {
       success: (result) => {
         this.setState({
           totalBooks: result.total_books,
-          books: result.books 
+          books: result.books,
+          booksPerPage: result.books_per_page
         })
         return;
       },
@@ -109,7 +111,7 @@ class App extends Component {
 
   createPagination(){
     let pageNumbers = [];
-    let maxPage = Math.ceil(this.state.totalBooks / 8)
+    let maxPage = Math.ceil(this.state.totalBooks / this.state.booksPerPage)
     for (let i = 1; i <= maxPage; i++) {
       pageNumbers.push(
         <div
